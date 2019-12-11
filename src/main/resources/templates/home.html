@@ -25,16 +25,16 @@
     <br><br>
 
     <div>
-        <button class="Button" onclick="goto('sampleMrc.html')">AI 독해</button> <br><br>
-        <button class="Button" onclick="goto('sampleFileStt.html')">음성인식/파일 (STT)</button> <br><br>
-        <button class="Button" onclick="goto('sampleTts.html')">음성생성 (TTS)</button> <br><br>
-        <button class="Button" onclick="goto('sampleEngStt.html')">영어교육 STT</button> <br><br>
+        <button class="Button" onclick="goto('sampleMrc')">AI 독해</button> <br><br>
+        <button class="Button" onclick="goto('sampleFileStt')">음성인식/파일 (STT)</button> <br><br>
+        <button class="Button" onclick="goto('sampleTts')">음성생성 (TTS)</button> <br><br>
+        <button class="Button" onclick="goto('sampleEngEduStt')">영어교육 STT</button> <br><br>
     </div>
 
     <script>
 
         function goto(page) {
-            location.href = '/static/html/' + page;
+            location.href = '/' + page;
         }
 
     </script>

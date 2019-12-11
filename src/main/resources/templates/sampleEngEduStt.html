@@ -41,8 +41,8 @@
 <!-- =================================================================================================================== -->
 <script src="https://maieng.maum.ai:7777/front/resources/static/js/maiEng-v1.min.js"></script>
 <script>
-    var API_ID = "api-id-temp";
-    var API_KEY = "api-key-temp";
+    var API_ID = "[[${apiId}]]";
+    var API_KEY = "[[${apiKey}]]";
     var USER_ID = "user-id-temp";
 
     maiEng.open(API_ID, API_KEY);
@@ -55,7 +55,7 @@
                 return;
             }
 
-            maiEng.startStt(USER_ID, null, $('#Edit_Answer').val(), onResult_Stt, onFail);
+            maiEng.startStt(USER_ID, "customer1", $('#Edit_Answer').val(), onResult_Stt, onFail);
 
             $(this).html('취소');
             $('#Text_Message').text('마이크로 정답문장을 따라 말하시면 자동으로 인식 결과가 출력됩니다.')
