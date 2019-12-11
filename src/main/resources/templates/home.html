@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <style>
+        .Button {
+            width: 300px;
+            height: 48px;
+        }
+
+        .TitleText {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="TitleText">
+        maum.ai API 사용 샘플 예제입니다.
+    </div>
+    <br><br>
+
+    <div>
+        <button class="Button" onclick="goto('sampleMrc.html')">AI 독해</button> <br><br>
+        <button class="Button" onclick="goto('sampleFileStt.html')">음성인식/파일 (STT)</button> <br><br>
+        <button class="Button" onclick="goto('sampleTts.html')">음성생성 (TTS)</button> <br><br>
+        <button class="Button" onclick="goto('sampleEngStt.html')">영어교육 STT</button> <br><br>
+    </div>
+
+    <script>
+
+        function goto(page) {
+            location.href = '/static/html/' + page;
+        }
+
+    </script>
+
+</body>
+</html>

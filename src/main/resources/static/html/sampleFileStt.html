@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <style>
+        .Button {
+            width: 300px;
+            height: 48px;
+        }
+
+        .TitleText {
+            font-size: 24px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="TitleText">
+        음성인식(STT) 예제
+    </div>
+    <br><br>
+
+    언어 &nbsp;
+    <input type="radio" name="Radio_Lang" value="kor" checked="checked" /> 한국어
+    <input type="radio" name="Radio_Lang" value="eng" /> 영어
+    <br><br>
+
+    샘플레이트 &nbsp;
+    <input type="radio" name="Radio_Sampling" value="8000" /> 8000
+    <input type="radio" name="Radio_Sampling" value="16000" checked="checked" /> 16000
+    <br><br>
+
+    <div>
+        <label for="File_Upload"><span><em class="fas fa-file-upload"></em>파일 업로드</span></label><br>
+        <input type="file" id="File_Upload" class="File_Upload">
+    </div>
+
+    <br><br>
+    <button id="Button_Run" class="Button"> 실행 </button>
+
+
+<!-- =================================================================================================================== -->
+<!-- 버튼 제어 및 녹음 -->
+<!-- =================================================================================================================== -->
+<script>
+
+    $('#Button_Run').click(function () {
+        var formData = new FormData();
+        formData.append('lang', $("input:radio[name='Radio_Lang']:checked").val());
+        formData.append('level', "baseline");
+        formData.append('sampling',$("input:radio[name='Radio_Sampling']:checked").val());
+        formData.append('file', document.getElementById('File_Upload').files[0]);
+
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function(){
+            if (request.readyState === 4){
+                alert(request.response);
+                var jsonResult = JSON.parse(request.response)['data'];
+                var stt_duration = JSON.parse(request.response)['extra_data']['stt_duration'];
+            }
+        };
+
+        request.open('POST', '/api/sampleStt');
+        request.send(formData);
+    });
+
+</script>
+
+
+<!-- =================================================================================================================== -->
+<!-- 서버 연동 -->
+<!-- =================================================================================================================== -->
+<script>
+
+</script>
+
+</body>
+</html>

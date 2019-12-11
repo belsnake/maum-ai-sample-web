@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <style>
+        .Button {
+            width: 300px;
+            height: 48px;
+        }
+
+        .TitleText {
+            font-size: 24px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="TitleText">
+        영어교육 음성인식 (STT) 예제
+    </div>
+    <br><br>
+
+    정답문장<br>
+    <input type="text" id="Edit_Answer" style="width:100%;height:32px" value="I want to buy a ticket."/>
+    <br><br>
+
+    <button id="Button_Run" class="Button">실행</button>
+    <br><br>
+
+    <div id="Text_Message">
+
+    </div>
+
+<!-- =================================================================================================================== -->
+<!-- 버튼 제어 및 녹음 -->
+<!-- =================================================================================================================== -->
+<script src="https://maieng.maum.ai:7777/front/resources/static/js/maiEng-v1.min.js"></script>
+<script>
+    var API_ID = "api-id-temp";
+    var API_KEY = "api-key-temp";
+    var USER_ID = "user-id-temp";
+
+    maiEng.open(API_ID, API_KEY);
+    $('#Button_Run').click(function () {
+        if( $(this).html() == '실행' ) {
+            if(!maiEng.isAvailableBrowser()) {
+                alert("'getUserMedia()' is not supported on your browser.\n\n"
+                        + "We recommend using the latest version of Chrome, "
+                        + "Firefox, Safari, or Microsoft Edge.");
+                return;
+            }
+
+            maiEng.startStt(USER_ID, null, $('#Edit_Answer').val(), onResult_Stt, onFail);
+
+            $(this).html('취소');
+            $('#Text_Message').text('마이크로 정답문장을 따라 말하시면 자동으로 인식 결과가 출력됩니다.')
+        }
+        else {
+            $(this).html('실행');
+            $('#Text_Message').text('')
+            maiEng.cancel();
+        }
+    });
+
+    /* 인식 완료 콜백 함수 */
+    function onResult_Stt(result) {
+        alert(result.userText + " (Score: " + result.score + ")");
+        // showResult(result.userText, result.recordUrl, result.score);
+        $('#Button_Run').html('실행');
+        $('#Text_Message').text('')
+
+    }
+
+    /* 인식 실패 콜백 함수 */
+    function onFail(reason) {
+        alert('서버와의 연동이 되지 않습니다.\n' + "reason:" + reason);
+        $('#Button_Run').html('실행');
+        $('#Text_Message').text('')
+    }
+
+</script>
+
+
+
+</body>
+</html>

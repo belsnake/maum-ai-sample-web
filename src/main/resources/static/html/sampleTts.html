@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <style>
+        .Button {
+            width: 300px;
+            height: 48px;
+        }
+
+        .TitleText {
+            font-size: 24px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="TitleText">
+        음성생성(TTS) 예제
+    </div>
+    <br><br>
+
+    화자<br>
+    <input type="radio" name="Radio_Speaker" value="baseline_kor" checked="checked" /> 한국어 상담원(여)
+    <input type="radio" name="Radio_Speaker" value="baseline_eng" /> 영어 여성
+    <input type="radio" name="Radio_Speaker" value="kor_kids_m" /> 한국어 남자아이
+    <input type="radio" name="Radio_Speaker" value="kor_kids_f" /> 한국어 여자아이
+    <br><br>
+    메세지<br>
+    <input type="text" id="Edit_Sentence"  style="width:100%; height:32px;" value="이 예제는 TTS API를 위한 예제입니다."/>
+    <br><br>
+    <button id="Button_sample1" class="Button"> 실행 </button>
+    <br><br>
+    <audio id="Player" controls ></audio>
+
+<script>
+    $('#Button_sample1').click(function () {
+        var formData = new FormData();
+        formData.append('text', $('#Edit_Sentence').val());
+        formData.append('voiceName', $("input:radio[name='Radio_Speaker']:checked").val());
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200){
+                var blob = xhr.response;
+                var audioSrcURL = window.URL.createObjectURL(blob);
+                $('#Player').attr('src',audioSrcURL);
+            }
+        }
+
+        xhr.open('POST', '/api/sampleTts');
+        xhr.responseType = 'blob';
+        xhr.send(formData);
+    });
+    
+</script>
+
+</body>
+</html>
